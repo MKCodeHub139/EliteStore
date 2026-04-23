@@ -258,13 +258,15 @@
         })
 
         // open review modal
-        function openReviewModal(){
-            if({{ auth()->guard('web')->check()? 'true' : 'false' }}=='true'){
-                my_modal_3.showModal();
-            } else {
-                alert('Please log in to submit a review');
-            }
-        }
+function openReviewModal(){
+    const isLoggedIn = @json(auth()->check());
+
+    if(isLoggedIn){
+        my_modal_3.showModal();
+    } else {
+        alert('Please log in to submit a review');
+    }
+}
         // review form submit
         $(document).on('submit','.reviewForm',function(e){
             e.preventDefault();

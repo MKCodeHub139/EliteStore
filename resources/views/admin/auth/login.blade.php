@@ -10,6 +10,12 @@
 <body>
     <div class="wrapper flex items-center justify-center w-[100vw] h-[100vh]">
         <div class="login max-w-[500px] w-[400px] min-h-[300px] max-w-[500px] border rounded-2xl border-gray-300 shadow-2xl p-5">
+            @if(session('success'))
+            <div class="text-green-700 my-5">{{session('success')}}</div>
+            @endif
+            @if(session('error'))
+            <div class="text-red-700 my-5">{{session('error')}}</div>
+            @endif
             <h2 class="text-2xl font-[500]">Admin Login</h2>
             <form action="/admin/login" method="POST" class="flex flex-col my-5 gap-4">
                 @csrf

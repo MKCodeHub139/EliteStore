@@ -36,8 +36,10 @@
                          <div class="img md:flex hidden items-center justify-center">
                              <div
                                  class="img-div  border border-white bg-white/20 h-[250px] w-[300px] rounded-3xl p-5 hover:scale-105 transition-transform duration-500 relative">
-                                 <img src="{{ asset($dealOfTheDay->main_image) }}" alt=""
-                                     class="w-full h-[100%] object-cover rounded-2xl border border-white">
+                                 <a href="/products/{{$dealOfTheDay->slug}}">
+                                     <img src="{{ asset($dealOfTheDay->main_image) }}" alt=""
+                                         class="w-full h-[100%] object-cover rounded-2xl border border-white">
+                                 </a>
                                  <div
                                      class="hot-badge absolute top-[-10px] right-0 rotate-[5deg] bg-amber-400 font-bold text-[15px] text-black px-5 py-1 rounded-xl ">
                                      <h5>Hot</h5>
@@ -73,8 +75,10 @@
                          <div class="img md:flex hidden items-center justify-center ">
                              <div
                                  class="img-div  border border-white bg-white/20 h-[250px] w-[300px] rounded-3xl p-5 hover:scale-105 transition-transform duration-500 relative">
-                                 <img src="{{ asset($products->where('is_new', true)->first()->main_image ??'')  }}" alt=""
-                                     class="w-full h-[100%] object-cover rounded-2xl border border-white">
+                                 <a href="/products/{{$products->where('is_new', true)->first()->slug}}">
+                                     <img src="{{ asset($products->where('is_new', true)->first()->main_image ??'')  }}" alt=""
+                                         class="w-full h-[100%] object-cover rounded-2xl border border-white">
+                                 </a>
                                  <div
                                      class="hot-badge absolute top-[-10px] right-0 rotate-[5deg] bg-amber-400 font-bold text-[15px] text-black px-5 py-1 rounded-xl ">
                                      <h5>Hot</h5>
@@ -110,8 +114,10 @@
                          <div class="img md:flex hidden items-center justify-center">
                              <div
                                  class="img-div  border border-white bg-white/20 h-[250px] w-[300px] rounded-3xl p-5 hover:scale-105 transition-transform duration-500 relative">
-                                 <img src="{{ asset($topSeller->first()->products->main_image) }}" alt=""
-                                     class="w-full h-[100%] object-cover rounded-2xl border border-white">
+                                 <a href="/proucts/{{$topSeller->first()->products->slug}}">
+                                     <img src="{{ asset($topSeller->first()->products->main_image) }}" alt=""
+                                         class="w-full h-[100%] object-cover rounded-2xl border border-white">
+                                 </a>
                                  <div
                                      class="hot-badge absolute top-[-10px] right-0 rotate-[5deg] bg-amber-400 font-bold text-[15px] text-black px-5 py-1 rounded-xl ">
                                      <h5>Hot</h5>
@@ -145,6 +151,7 @@
              </div>
              <div class="cartegory-cards py-5 flex flex-wrap justify-center gap-5">
                  @foreach ($categories as $category)
+                 <a href="/categories">
                      <div
                          class="category-card  relative w-[200px] h-[150px] border border-gray-300 rounded-xl hover:bg-blue-50 flex justify-center items-center flex-col hover:shadow-xl hover:scale-105 group transition-all duration-300"
                          onmouseover="this.style.backgroundColor='{{$category->image_background_color}}'"
@@ -158,6 +165,7 @@
                          <p class="text-gray-500 text-[11px]">{{$category->products->count()}} Products</p>
                          <div class="absolute top-0 left-0 w-full h-[100%] group-hover:bg-white/80 z-[-1] transition-colors duration-300"></div>
                      </div>
+                 </a>
                  @endforeach
              </div>
          </div>
@@ -192,14 +200,16 @@
                  </div>
                  <div
                      class="body h-max bg-gradient-to-r from-orange-500 via-orange-500 via-orange-400 to-pink-400   md:grid grid-cols-2  flex flex-col p-10 gap-5 items-center relative">
-                     <div class="img w-[100%] bg-white rounded-2xl  flex items-center justify-end p-7 relative z-[11]">
-                         <img src="{{ asset($dealOfTheDay->main_image) }}" alt=""
-                             class="w-[100%]  h-[50vh] rounded-2xl object-cover border border-gray-300 shadow-lg hover:scale-105 transition-transform duration-300">
-                         <div
-                             class="hot-badge absolute top-[-10px] right-0 rotate-[5deg] bg-gradient-to-r from-orange-500 to-pink-500 font-bold text-[13px] text-black px-3 py-1 rounded-xl text-white ">
-                             <h5>13% OFF</h5>
+                     <a href="/products/{{$dealOfTheDay->slug}}">
+                         <div class="img w-[100%] bg-white rounded-2xl  flex items-center justify-end p-7 relative z-[11]">
+                             <img src="{{ asset($dealOfTheDay->main_image) }}" alt=""
+                                 class="w-[100%]  h-[50vh] rounded-2xl object-cover border border-gray-300 shadow-lg hover:scale-105 transition-transform duration-300">
+                             <div
+                                 class="hot-badge absolute top-[-10px] right-0 rotate-[5deg] bg-gradient-to-r from-orange-500 to-pink-500 font-bold text-[13px] text-black px-3 py-1 rounded-xl text-white ">
+                                 <h5>13% OFF</h5>
+                             </div>
                          </div>
-                     </div>
+                     </a>
                      <div class="text flex flex-col w-full items-start gap-3 z-[11]">
                          <div class="offer-expiry flex items-center bg-red-100 w-max px-3 py-1 rounded-full">
                              <div class="w-[10px] h-[10px] bg-red-500 rounded-full mr-2 animate-pulse"></div>
@@ -277,6 +287,7 @@
              <div class="best-seller-body">
                  <div class="best-seller-cards  flex flex-wrap gap-5 my-5">
                      @foreach ($topSeller as $item)
+                     <a href="/products/{{$item->products->slug}}">
                          <div
                              class="best-seller-card border rounded-xl overflow-hidden p-2 hover:shadow-xl hover:translate-y-[-5px] transition-all duration-300 cursor-pointer group">
                              <div class="img w-[150px] h-[130px] overflow-hidden rounded-lg">
@@ -308,6 +319,7 @@
 
                              <!-- Best seller card content -->
                          </div>
+                     </a>
                      @endforeach
                  </div>
              </div>

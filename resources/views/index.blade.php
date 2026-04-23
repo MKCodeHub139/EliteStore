@@ -116,7 +116,7 @@
                 let id = $(this).data('id')
                 console.log(id)
 
-                increaseDecreaseQty(1000, cartQty, id)
+                increaseDecreaseQty(300, cartQty, id)
             }
         })
         $(document).on('click', '.increaseQty', function(e) {
@@ -125,7 +125,7 @@
             cartQty++
             $(this).siblings('.cartQty').val(cartQty)
             let id = $(this).data('id')
-            increaseDecreaseQty(1000, cartQty, id)
+            increaseDecreaseQty(300, cartQty, id)
         })
 
         function increaseDecreaseQty(time, qty, id) {

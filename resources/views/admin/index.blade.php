@@ -25,6 +25,7 @@
                     <p class="text-sm font-[500]">Admin</p>
                     <p class="text-gray-500">ansarikafi757@gmail.com</p>
                 </div>
+                <a href="/admin/logout" class="btn">Logout</a>
             </div>
         </nav> <hr>
         <div class="content py-5">

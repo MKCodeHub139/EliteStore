@@ -8,12 +8,12 @@ Route::get('/login', function () {
     return view('admin.auth.login');
 })->name('admin.login');
 
-Route::post('/login',[AdminController::class,'login'])->name('admin.login');
-    Route::get('/dashboard', function () {
-        return view('admin.pages.dashboard');
-    })->name('admin.dashboard');
+Route::post('/login',[AdminController::class,'login'])->name('admin.login.submit');
+    // Route::get('/dashboard', function () {
+    //     return view('admin.pages.dashboard');
+    // })->name('admin.dashboard');
 
-
+Route::middleware('admin.session')->group(function () {
 // dashboard
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -65,3 +65,16 @@ Route::get('/orders/data',[AdminController::class,'getOrders'])->name('getOrders
 Route::get('/orders/edit/{id}',[AdminController::class,'editOrder'])->name('admin.orders.edit');
 Route::post('/orders/update-quantity/{id}', [AdminController::class, 'updateOrderQuantity'])->name('order.updateQuantity');
 Route::post('/orders/update-order/{id}', [AdminController::class, 'updateOrder'])->name('order.updateOrder');
+
+
+// logout
+Route::get('/logout', function(){
+   session()->forget('is_admin_logged_in'); // sirf admin flag hatao
+    // ya full clear:
+    // session()->flush();
+
+    return redirect()->route('admin.login')
+        ->with('success', 'Logged out successfully');
+
+})->name('admin.logout');
+});
