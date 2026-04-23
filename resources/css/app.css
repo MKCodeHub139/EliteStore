@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+.dt-container{
+    margin-top:2rem;
+}
+/* Hide thumb completely */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}

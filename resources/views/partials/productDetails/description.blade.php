@@ -1,0 +1,1 @@
+<p class="text-[13px] text-gray-600">{{ $product->description }}</p>
