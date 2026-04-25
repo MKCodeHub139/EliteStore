@@ -1,26 +1,26 @@
 FROM php:8.2-cli
 
-# Install system deps
 RUN apt-get update && apt-get install -y \
-    git unzip curl libpq-dev libzip-dev zip nodejs npm
+    git unzip curl libpq-dev libzip-dev zip
 
-# PHP extensions
+# Proper Node install
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 RUN docker-php-ext-install pdo pdo_pgsql zip
 
-# Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
 COPY . .
 
-# Install PHP deps
+# PHP deps
 RUN composer install --no-dev --optimize-autoloader
 
-# 🔥 IMPORTANT: Install node deps & build assets
-
-RUN npm install && npm run build
-
+# Frontend build
+RUN npm install
+RUN npm run build
 
 EXPOSE 10000
 

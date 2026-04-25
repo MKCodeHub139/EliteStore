@@ -10,6 +10,10 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+     build: {
+        manifest: true,
+        outDir: 'public/build', // 🔥 IMPORTANT
+    },
      base: '/',
     server: {
         watch: {
