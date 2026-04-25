@@ -94,7 +94,7 @@ class AdminController extends Controller
             'warenty' => 'nullable|String',
             'has_variants' => 'boolean',
             'variant_type' => 'string|nullable',
-            'status' => 'string|in:active,inactive',
+            'status' => 'string|in:Active,Inactive',
             'is_featured' => 'boolean|nullable',
             'is_trending' => 'boolean|nullable',
             'is_hot' => 'boolean|nullable',
@@ -131,6 +131,7 @@ class AdminController extends Controller
                 $galleryImageNames[] = 'uploads/products/' . $name;
             }
         }
+
         $product = Product::create([
             'name' => $validated['name'],
             'slug' => $slug,
@@ -198,6 +199,7 @@ class AdminController extends Controller
             'is_hot' => 'boolean|nullable',
             'is_new' => 'boolean|nullable',
         ]);
+        // check brand and create
         // set price
         $price = $validated['old_price'];
         if ($validated['discount_price']) {

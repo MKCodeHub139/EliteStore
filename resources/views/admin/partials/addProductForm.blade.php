@@ -19,9 +19,10 @@
         <select name="brand_id" id="brand_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             <option value="">Select a category</option>
             <!-- Options will be populated dynamically -->
-                @foreach($brands as $brand)
-                    <option value="{{$brand->id}}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{$brand->name}}</option>
-                @endforeach
+            @foreach($brands as $brand)
+            <option value="{{$brand->id}}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{$brand->name}}</option>
+            @endforeach
+            <option value="">Other</option>
         </select>
         <div id="brand_id_error" class="text-red-700 text-[11px]"></div>
 
