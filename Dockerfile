@@ -18,7 +18,9 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # 🔥 IMPORTANT: Install node deps & build assets
+
 RUN npm install && npm run build
+
 
 EXPOSE 10000
 
