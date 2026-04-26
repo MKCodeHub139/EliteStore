@@ -29,12 +29,12 @@
                 {{-- category card --}}
                 <div style=""
                     class="category-card grow max-w-[400px]  w-[350px] border border-gray-300 h-[100%] rounded-2xl p-4 flex flex-col group relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:translate-y-[-5px]"
-                    onmouseover="this.style.backgroundColor='{{ $category->image_background_color }}'"
+                    onmouseover="this.style.backgroundColor='{{ $category?->image_background_color }}'"
                     onmouseout="this.style.backgroundColor=''">
                     {{-- svg --}}
                     <div class=" flex justify-between items-center">
                         <div class="svg p-3 rounded-3xl transition-transform duration-500 group-hover:rotate-[10deg] group-hover:scale-105"
-                            style="background: linear-gradient(to right, #2563eb, {{ $category->image_background_color ?? '#6366f1' }})">
+                            style="background: linear-gradient(to right, #2563eb, {{ $category?->image_background_color ?? '#6366f1' }})">
 
                             <div class="text-4xl ">🎧</div>
                         </div>
@@ -51,17 +51,17 @@
                     </div>
                     {{-- category-title --}}
                     <div class="category-title mt-4 group-hover:text-blue-500 transition-colors duration-300">
-                        <h2 class="font-bold text-2xl">{{ $category->name }}</h2>
+                        <h2 class="font-bold text-2xl">{{ $category?->name }}</h2>
                     </div>
                     {{-- category description --}}
                     <div class="category-description text-[13px] my-1 text-gray-600">
-                        <p>{{ $category->description }}</p>
+                        <p>{{ $category?->description }}</p>
                     </div>
                     {{-- availability and browse now btn --}}
                     <div class="availability-view-btn flex justify-between items-center my-3">
                         {{-- availability --}}
                         <div class="availability">
-                            <p class="text-[11px]">{{ $categories->count() }} Products Available</p>
+                            <p class="text-[11px]">{{ $categories?->count() }} Products Available</p>
                         </div>
                         <div class="view-bt">
                             <a href="" class="text-[13px] text-blue-600 font-bold">Browse Now -></a>

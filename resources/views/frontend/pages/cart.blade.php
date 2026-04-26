@@ -1,7 +1,7 @@
 @extends('index')
 @section('main')
 <div class="main-content lg:px-15 px-2">
-    @if($cartItems->count() > 0)
+    @if($cartItems?->count() > 0)
     <div class="lg:grid grid-cols-3 lg:my-5 gap-5 flex flex-col-reverse">
         {{-- cart Modal --}}
             <div class="cart-or-order-card cart-modals lg:col-span-2 w-full h-screen ">
@@ -11,8 +11,8 @@
             <h2 class="text-xl font-bold">Order Summary</h2>
             <div class="subtotal flex justify-between my-3">
                 <p class="text-[12px] text-gray-500">Subtotal</p>
-                <p class="text-[12px] font-[500]">${{$cartItems->sum(function($item){
-                    return $item->product->price * $item->quantity;
+                <p class="text-[12px] font-[500]">${{$cartItems?->sum(function($item){
+                    return $item?->product?->price * $item->quantity;
                 })}}</p>
             </div>
             <div class="shipping my-3 flex justify-between">
@@ -27,8 +27,8 @@
             </div><hr>
             <div class="total my-3 flex justify-between">
                 <p class="text-[17px] font-bold">Total</p>
-                <p class="text-[17px] font-bold">${{$cartItems->sum(function($item){
-                    return $item->product->price * $item->quantity;
+                <p class="text-[17px] font-bold">${{$cartItems?->sum(function($item){
+                    return $item?->product?->price * $item?->quantity;
                 })}}</p>
             </div>
             <div class="proceed-btn text-center w-full my-3">

@@ -115,7 +115,7 @@
                              <div
                                  class="img-div  border border-white bg-white/20 h-[250px] w-[300px] rounded-3xl p-5 hover:scale-105 transition-transform duration-500 relative">
                                  <a href="/proucts/{{$topSeller?->first()?->products?->slug}}">
-                                     <img src="{{ asset($topSeller?->first()->products?->main_image) }}" alt=""
+                                     <img src="{{ asset($topSeller?->first()?->products?->main_image) }}" alt=""
                                          class="w-full h-[100%] object-cover rounded-2xl border border-white">
                                  </a>
                                  <div
@@ -154,14 +154,14 @@
                  <a href="/categories">
                      <div
                          class="category-card  relative w-[200px] h-[150px] border border-gray-300 rounded-xl hover:bg-blue-50 flex justify-center items-center flex-col hover:shadow-xl hover:scale-105 group transition-all duration-300"
-                         onmouseover="this.style.backgroundColor='{{$category->image_background_color}}'"
+                         onmouseover="this.style.backgroundColor='{{$category?->image_background_color}}'"
                          onmouseout="this.style.backgroundColor=''">
                          <div class="img bg-gradient-to-r from-blue-500  overflow-hidden rounded-2xl group-hover:rotate-[10deg] transition-all duration-300"  style="background: linear-gradient(to right, #2563eb, {{ $category->image_background_color ?? '#6366f1' }})">
                              <img src="{{ asset('uploads/categories/1775458286_jpg') }}" alt=""
                                  class="w-[60px] h-[60px] object-cover mb-2 ">
                          </div>
 
-                         <p class="group-hover:text-blue-500 font-bold text-[12px]">{{$category->name}}</p>
+                         <p class="group-hover:text-blue-500 font-bold text-[12px]">{{$category?->name}}</p>
                          <p class="text-gray-500 text-[11px]">{{$category?->products?->count()}} Products</p>
                          <div class="absolute top-0 left-0 w-full h-[100%] group-hover:bg-white/80 z-[-1] transition-colors duration-300"></div>
                      </div>

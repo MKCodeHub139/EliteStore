@@ -8,7 +8,7 @@
                 <h2 class="text-4xl font-bold">All Products</h2>
             </div>
             <div class="description my-2">
-                <p class="text-[14px] text-gray-200">Explore our complete collection of {{ $products->count() }} premium
+                <p class="text-[14px] text-gray-200">Explore our complete collection of {{ $products?->count() }} premium
                     electronics</p>
             </div>
         </div>
@@ -28,12 +28,12 @@
                             <li
                                 class="filter-category text-white bg-gradient-to-r from-blue-600 via-purple-600 to-purple-600 rounded-xl px-2 py-2 flex justify-between">
                                 <p>All Proucts</p>
-                                <p class="bg-white rounded-full px-2 text-black">{{ $products->count() }}</p>
+                                <p class="bg-white rounded-full px-2 text-black">{{ $products?->count() }}</p>
                             </li>
                             @foreach ($categories as $category)
                                 <li class="px-2 py-2 hover:bg-gray-100 rounded-xl flex justify-between filter-category"
-                                    data-catId="{{ $category->id }}">
-                                    <p>{{ $category->name }}</p>
+                                    data-catId="{{ $category?->id }}">
+                                    <p>{{ $category?->name }}</p>
                                     <p class="bg-gray-200 rounded-full px-2 text-black">{{ $category->products->count() }}
                                     </p>
                                 </li>
@@ -95,7 +95,7 @@
                                     <circle cx="8" cy="18" r="2" />
                                 </svg>
                             </button>
-                            <p>{{ $products->count() }} Products found </p>
+                            <p>{{ $products?->count() }} Products found </p>
                         </div>
                         <div class="actions flex md:flex-row flex-col gap-2 items-center h-[100%]">
                             <div

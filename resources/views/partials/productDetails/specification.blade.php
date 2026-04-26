@@ -1,3 +1,4 @@
+@if($product)
 <div class="specifications grid md:grid-cols-2 grid-cols-1  gap-4">
     <div class="spec-brand flex items-center justify-between bg-gray-100 p-3 rounded-lg">
         <h3 class="text-[12px] font-bold text-gray-500">Brand</h3>
@@ -23,6 +24,7 @@
         <h3 class="text-[12px] font-bold text-gray-500">SKU</h3>
         <p class="text-[13px] ">{{ $product->sku ?? 'N/A' }}</p>
     </div>
- 
-
 </div>
+@else
+<div class="text-[20px] text-gray-600 text-center">Something went wrong , product not found</div>
+@endif

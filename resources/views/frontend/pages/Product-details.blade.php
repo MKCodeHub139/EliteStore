@@ -4,14 +4,15 @@
         <div class="back-btn">
             <a href="{{ url()->previous() }}" class="text-[13px] text-blue-500 font-[500]"><- Back to Products</a>
         </div>
+        @if($product)
         <div class="product-img-and-details grid md:grid-cols-2  grid-cols-1 gap-10 py-5">
             <div class="product-images  min-h-[400px]  overflow-hidden">
                 {{-- main image --}}
                 <div class="main-img overflow-hidden h-[500px] w-[100%] border rounded-2xl relative">
-                    <img src="{{ asset($product->main_image) }}" alt="" class="h-[100%] object-cover w-[100%]">
+                    <img src="{{ asset($product?->main_image) }}" alt="" class="h-[100%] object-cover w-[100%]">
                     <div class="discount absolute top-0 right-0 p-2 ">
                         <p class="px-2 py-1 font-[500] text-white bg-red-500 rounded-full text-[13px] ">
-                            -{{ $product->old_price && $product->discount_price ? round((($product->old_price - $product->price) / $product->old_price) * 100) : '' }}%
+                            -{{ $product?->old_price && $product?->discount_price ? round((($product?->old_price - $product->price) / $product->old_price) * 100) : '' }}%
                             OFF</p>
                     </div>
                 </div>
@@ -223,6 +224,9 @@
              
             </div>
         </div>
+        @else
+        <div class="text-[20px] text-gray-600">No Product Found</div>
+        @endif
     </div>
         @endsection
         @section('scripts')

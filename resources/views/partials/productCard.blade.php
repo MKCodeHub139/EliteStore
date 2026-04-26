@@ -1,7 +1,7 @@
  @if($products->isEmpty())
      <p class="text-center text-gray-500 col-span-3">No products found.</p>
- @endif
 
+@else
  @foreach ($products as $product)
  
      <div
@@ -102,3 +102,4 @@
          </div>
      </div>
  @endforeach
+  @endif
