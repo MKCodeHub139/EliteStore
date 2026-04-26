@@ -12,7 +12,7 @@
                     <img src="{{ asset($product?->main_image) }}" alt="" class="h-[100%] object-cover w-[100%]">
                     <div class="discount absolute top-0 right-0 p-2 ">
                         <p class="px-2 py-1 font-[500] text-white bg-red-500 rounded-full text-[13px] ">
-                            -{{ $product?->old_price && $product?->discount_price ? round((($product?->old_price - $product->price) / $product->old_price) * 100) : '' }}%
+                            -{{ $product?->old_price && $product?->discount_price ? round((($product?->old_price - $product?->price) / $product?->old_price) * 100) : '' }}%
                             OFF</p>
                     </div>
                 </div>
@@ -113,12 +113,12 @@
                 <div class="quantity">
                     <h5 class="text-[13px] font-bold mb-2">Quantity:</h5>
                     <button class="btn text-2xl font-[500] decreaseQty"
-                        data-id="{{ auth()?->guard('web')?->user()?->carts->where('product_id', $product->id)->first()->id }}">-</button>
+                        data-id="{{ auth()?->guard('web')?->user()?->carts?->where('product_id', $product->id)?->first()->id }}">-</button>
                     <input type="text" name="" id=""
-                        value="{{ auth()->guard('web')?->user()?->carts->where('product_id', $product->id)->first()->quantity ?? 1 }}"
+                        value="{{ auth()->guard('web')?->user()?->carts?->where('product_id', $product->id)?->first()?->quantity ?? 1 }}"
                         class="w-[50px] text-center font-bold text-xl cartQty" disabled>
                     <button class="btn text-2xl increaseQty"
-                        data-id="{{ auth()?->guard('web')?->user()?->carts->where('product_id', $product->id)->first()->id }}">+</button>
+                        data-id="{{ auth()?->guard('web')?->user()?->carts?->where('product_id', $product?->id)->first()?->id }}">+</button>
                 </div>
                 {{-- cart btn  and whishlist and share btn --}}
                 <div class="cart-wishlist-store my-6 grid grid-cols-8 gap-2">
@@ -199,7 +199,7 @@
                                 d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
                             </path>
                         </svg>
-                        <h2 class="text-[12px] font-bold">{{ $product->warenty }} year Warranty</h2>
+                        <h2 class="text-[12px] font-bold">{{ $product?->warenty }} year Warranty</h2>
                         <p class="text-[10px] text-gray-600 mt-1">Full Coverage</p>
                     </div>
                 </div>

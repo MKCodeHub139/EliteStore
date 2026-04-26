@@ -1,7 +1,7 @@
  <div class="small-nav w-full h-[1.5rem] bg-black text-white text-[14px] px-5 sticky top-0 z-50">
     @if(auth()->guard('web')->user())
     <a href="" class="float-end">Logout</a>
-    <span class="">Welcome, {{ auth()->guard('web')->user()->name }}</span>
+    <span class="">Welcome, {{ auth()?->guard('web')?->user()?->name }}</span>
     @else
     <a href="/login" class="float-end">Login</a>
     @endif
@@ -68,7 +68,7 @@
                                 </path>
                             </svg>
                         </a>
-                        <span class="cart-count absolute top-[-10px] right-[-10px] bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">{{ auth()->guard('web')->user() ? auth()->guard('web')->user()->carts->sum('quantity') : 0 }}</span>
+                        <span class="cart-count absolute top-[-10px] right-[-10px] bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">{{ auth()?->guard('web')?->user() ? auth()->guard('web')?->user()?->carts->sum('quantity') : 0 }}</span>
                     </li>
                 </ul>
             </div>
