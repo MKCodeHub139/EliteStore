@@ -36,8 +36,8 @@
                          <div class="img md:flex hidden items-center justify-center">
                              <div
                                  class="img-div  border border-white bg-white/20 h-[250px] w-[300px] rounded-3xl p-5 hover:scale-105 transition-transform duration-500 relative">
-                                 <a href="/products/{{$dealOfTheDay->slug}}">
-                                     <img src="{{ asset($dealOfTheDay->main_image) }}" alt=""
+                                 <a href="/products/{{$dealOfTheDay?->slug}}">
+                                     <img src="{{ asset($dealOfTheDay?->main_image) }}" alt=""
                                          class="w-full h-[100%] object-cover rounded-2xl border border-white">
                                  </a>
                                  <div
@@ -75,8 +75,8 @@
                          <div class="img md:flex hidden items-center justify-center ">
                              <div
                                  class="img-div  border border-white bg-white/20 h-[250px] w-[300px] rounded-3xl p-5 hover:scale-105 transition-transform duration-500 relative">
-                                 <a href="/products/{{$products->where('is_new', true)->first()->slug}}">
-                                     <img src="{{ asset($products->where('is_new', true)->first()->main_image ??'')  }}" alt=""
+                                 <a href="/products/{{$products?->where('is_new', true)?->first()?->slug}}">
+                                     <img src="{{ asset($products?->where('is_new', true)?->first()?->main_image ??'')  }}" alt=""
                                          class="w-full h-[100%] object-cover rounded-2xl border border-white">
                                  </a>
                                  <div
@@ -114,8 +114,8 @@
                          <div class="img md:flex hidden items-center justify-center">
                              <div
                                  class="img-div  border border-white bg-white/20 h-[250px] w-[300px] rounded-3xl p-5 hover:scale-105 transition-transform duration-500 relative">
-                                 <a href="/proucts/{{$topSeller->first()->products->slug}}">
-                                     <img src="{{ asset($topSeller->first()->products->main_image) }}" alt=""
+                                 <a href="/proucts/{{$topSeller?->first()?->products?->slug}}">
+                                     <img src="{{ asset($topSeller?->first()->products?->main_image) }}" alt=""
                                          class="w-full h-[100%] object-cover rounded-2xl border border-white">
                                  </a>
                                  <div
@@ -162,7 +162,7 @@
                          </div>
 
                          <p class="group-hover:text-blue-500 font-bold text-[12px]">{{$category->name}}</p>
-                         <p class="text-gray-500 text-[11px]">{{$category->products->count()}} Products</p>
+                         <p class="text-gray-500 text-[11px]">{{$category?->products?->count()}} Products</p>
                          <div class="absolute top-0 left-0 w-full h-[100%] group-hover:bg-white/80 z-[-1] transition-colors duration-300"></div>
                      </div>
                  </a>
@@ -200,9 +200,9 @@
                  </div>
                  <div
                      class="body h-max bg-gradient-to-r from-orange-500 via-orange-500 via-orange-400 to-pink-400   md:grid grid-cols-2  flex flex-col p-10 gap-5 items-center relative">
-                     <a href="/products/{{$dealOfTheDay->slug}}">
+                     <a href="/products/{{$dealOfTheDay?->slug}}">
                          <div class="img w-[100%] bg-white rounded-2xl  flex items-center justify-end p-7 relative z-[11]">
-                             <img src="{{ asset($dealOfTheDay->main_image) }}" alt=""
+                             <img src="{{ asset($dealOfTheDay?->main_image) }}" alt=""
                                  class="w-[100%]  h-[50vh] rounded-2xl object-cover border border-gray-300 shadow-lg hover:scale-105 transition-transform duration-300">
                              <div
                                  class="hot-badge absolute top-[-10px] right-0 rotate-[5deg] bg-gradient-to-r from-orange-500 to-pink-500 font-bold text-[13px] text-black px-3 py-1 rounded-xl text-white ">
@@ -287,15 +287,15 @@
              <div class="best-seller-body">
                  <div class="best-seller-cards  flex flex-wrap gap-5 my-5">
                      @foreach ($topSeller as $item)
-                     <a href="/products/{{$item->products->slug}}">
+                     <a href="/products/{{$item?->products?->slug}}">
                          <div
                              class="best-seller-card border rounded-xl overflow-hidden p-2 hover:shadow-xl hover:translate-y-[-5px] transition-all duration-300 cursor-pointer group">
                              <div class="img w-[150px] h-[130px] overflow-hidden rounded-lg">
-                                 <img src="{{ asset($item->products->main_image) }}" alt=""
+                                 <img src="{{ asset($item?->products?->main_image) }}" alt=""
                                      class="w-[100%] h-[100%] object-cover rounded-lg group-hover:scale-105 transition-transform duration-300">
                              </div>
                              <div class="title my-2">
-                                 <h3 class="font-bold text-[12px] text-gray-600">{{ $item->products->name }}</h3>
+                                 <h3 class="font-bold text-[12px] text-gray-600">{{ $item?->products?->name }}</h3>
                              </div>
                              {{-- rating --}}
                              <div class="ratings flex gap-1">
@@ -309,11 +309,11 @@
                                          d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
                                      </path>
                                  </svg>
-                                 <span class="text-[9px] font-bold">{{ $item->products->total_reviews ?? '0' }}</span>
+                                 <span class="text-[9px] font-bold">{{ $item?->products?->total_reviews ?? '0' }}</span>
                              </div>
                              <div class="price my-2 flex items-center gap-1">
-                                 <p class="font-bold text-[13px]">${{ number_format($item->products->price, 2) }}</p><del
-                                     class="text-[10px] mt-1 text-gray-400">${{ number_format($item->products->old_price, 2) }}</del>
+                                 <p class="font-bold text-[13px]">${{ number_format($item?->products?->price, 2) }}</p><del
+                                     class="text-[10px] mt-1 text-gray-400">${{ number_format($item?->products?->old_price, 2) }}</del>
                              </div>
 
 
