@@ -113,9 +113,9 @@
                 <div class="quantity">
                     <h5 class="text-[13px] font-bold mb-2">Quantity:</h5>
                     <button class="btn text-2xl font-[500] decreaseQty"
-                        data-id="{{ auth()?->guard('web')?->user()?->carts?->where('product_id', $product->id)?->first()->id }}">-</button>
+                        data-id="{{ auth()?->guard('web')?->user()?->carts?->where('product_id', $product?->id)?->first()?->id }}">-</button>
                     <input type="text" name="" id=""
-                        value="{{ auth()->guard('web')?->user()?->carts?->where('product_id', $product->id)?->first()?->quantity ?? 1 }}"
+                        value="{{ auth()->guard('web')?->user()?->carts?->where('product_id', $product?->id)?->first()?->quantity ?? 1 }}"
                         class="w-[50px] text-center font-bold text-xl cartQty" disabled>
                     <button class="btn text-2xl increaseQty"
                         data-id="{{ auth()?->guard('web')?->user()?->carts?->where('product_id', $product?->id)->first()?->id }}">+</button>
@@ -280,7 +280,7 @@ function openReviewModal(){
                 comment:$('textarea[name="comment"]').val(),
             };
             $.ajax({
-                url:'{{route('products.submitReview', $product->slug)}}',
+                url:'{{route('products.submitReview', $product?->slug)}}',
                 method:'POST',
                 data:formData,
                 success:function(res){
