@@ -21,8 +21,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         // 🔥 FORCE HTTPS on production (IMPORTANT for Render/Vite)
-        if (env('APP_ENV') === 'production') {
-            URL::forceScheme('https');
-        }
+        // if (env('APP_ENV') === 'production') {
+        //     URL::forceScheme('https');
+        // }
     }
 }

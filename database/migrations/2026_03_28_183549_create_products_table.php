@@ -27,6 +27,8 @@ return new class extends Migration
             $table->integer('stock_quantity');
             $table->string('sku')->nullable();
             $table->string('main_image');
+            $table->string('main_image_public_id');
+            
             $table->json('gallery_images')->nullable();
             $table->boolean('has_variants')->default(false);
             $table->string('variant_type')->nullable();
@@ -41,65 +43,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
-//  🧾 Typical Intermediate Product Table Columns
-// 🔹 1. Basic Product Info
-// id (Primary Key)
-// name (Product name)
-// slug (SEO-friendly URL, e.g. "nike-air-shoes")
-// description (Full details)
-// short_description
-// brand_id (Foreign key)
-// category_id (Foreign key)
-// 🔹 2. Pricing & Stock
-// price (Base price)
-// discount_price (Offer price)
-// cost_price (Optional, internal use)
-// stock_quantity
-// sku (Stock Keeping Unit - unique code)
-// 🔹 3. Product Media
-// main_image
-// gallery_images (JSON ya separate table me bhi ho sakta hai)
-// 🔹 4. Product Variants (agar applicable ho)
-// has_variants (boolean)
-// variant_type (size, color, etc.)
-
-// 👉 Advanced systems me variants alag table me hote hain:
-
-// product_variants table (size, color, price, stock)
-// 🔹 5. Status & Visibility
-// status (active / inactive)
-// is_featured
-// is_trending
-// visibility (public / private / hidden)
-// 🔹 6. SEO Fields
-// meta_title
-// meta_description
-// meta_keywords
-// 🔹 7. Ratings & Reviews
-// average_rating
-// total_reviews
-// 🔹 8. Shipping Info
-// weight
-// dimensions (length, width, height)
-// shipping_class
-// 🔹 9. Timestamps
-// created_at
-// updated_at
-// deleted_at (soft delete ke liye)
-// 🔥 Bonus (Intermediate+ Features)
-// tax_class
-// barcode
-// supplier_id
-// returnable (yes/no)
-// warranty_period
-// 🧠 Pro Tip
-
-// Real-world systems (like Amazon ya Flipkart) me product data normalize hota hai, matlab:
-
-// Images → separate table
-// Variants → separate table
-// Reviews → separate table 
 
     /**
      * Reverse the migrations.

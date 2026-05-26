@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Yajra\DataTables\Facades\DataTables;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AdminController extends Controller
 {
@@ -76,7 +77,7 @@ class AdminController extends Controller
     // store product 
     public function storeProduct(Request $request)
     {
-
+        // store in system
         $validated = $request->validate([
             'name' => 'string|required',
             'description' => 'string|nullable',
@@ -101,68 +102,203 @@ class AdminController extends Controller
             'is_new' => 'boolean|nullable',
             // add more validation rules as needed
         ]);
-        // set price
-        $price = $validated['old_price'];
-        if ($validated['discount_price']) {
-            $price = $validated['old_price'] - $validated['discount_price'];
-        }
-        // slug logic
-        $slug = Str::slug($validated['name']);
-        $originalSlug = $slug;
-        $count = 1;
-        while (Product::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $count++;
-        }
-        // sku logic
-        $sku = 'PROD' . '-' . strtoupper(Str::random(6));
+        // // set price
+        // $price = $validated['old_price'];
+        // if ($validated['discount_price']) {
+        //     $price = $validated['old_price'] - $validated['discount_price'];
+        // }
+        // // slug logic
+        // $slug = Str::slug($validated['name']);
+        // $originalSlug = $slug;
+        // $count = 1;
+        // while (Product::where('slug', $slug)->exists()) {
+        //     $slug = $originalSlug . '-' . $count++;
+        // }
+        // // sku logic
+        // $sku = 'PROD' . '-' . strtoupper(Str::random(6));
 
-        $keyFeatures = explode(",", $request->key_features);
-        if ($request->hasFile('main_image')) {
-            $mainImage = $request->file('main_image');
-            $mainImageName = time() . '_' . uniqid() . '.' . $mainImage->getClientOriginalExtension();
-            $mainImage->move(public_path('uploads/products'), $mainImageName);
-            $validated['main_image'] = 'uploads/products/' . $mainImageName;
-        }
-        if ($request->hasFile('gallery_images')) {
-            $galleryImageNames = [];
-            foreach ($request->file('gallery_images') as $galleryImage) {
-                $name = time() . '_' . uniqid() . '.' . $galleryImage->getClientOriginalExtension();
-                $galleryImage->move(public_path('uploads/products'), $name);
-                $galleryImageNames[] = 'uploads/products/' . $name;
-            }
-        }
+        // $keyFeatures = explode(",", $request->key_features);
+        // if ($request->hasFile('main_image')) {
+        //     // $mainImage = $request->file('main_image');
+        //     // $mainImageName = time() . '_' . uniqid() . '.' . $mainImage->getClientOriginalExtension();
+        //     $uploadedFile = Cloudinary::upload(
+        //         $request->file('main_image')->getRealPath(),
+        //         [
+        //             'folder' => 'products'
+        //         ]
+        //     );
 
-        $product = Product::create([
-            'name' => $validated['name'],
-            'slug' => $slug,
-            'description' => $validated['description'] ?? '',
-            'price' => $price,
-            'category_id' => $validated['category_id'],
-            'brand_id' => $validated['brand_id'] ?? null,
-            'key_features' => $keyFeatures,
-            'short_description' => $validated['short_description'] ?? '',
-            'old_price' => $validated['old_price'] ?? null,
-            'discount_price' => $validated['discount_price'] ?? null,
-            'cost_price' => $validated['cost_price'] ?? null,
-            'stock_quantity' => $validated['stock_quantity'] ?? 0,
-            'sku' => $sku,
-            'main_image' => $validated['main_image'] ?? null,
-            'gallery_images' => $galleryImageNames ?? null,
-            'warenty' => $validated['warenty'] ?? 0,
-            'has_variants' => $validated['has_variants'] ?? false,
-            'variant_type' => $validated['variant_type'] ?? null,
-            'status' => $validated['status'] ?? 'inactive',
-            'is_featured' => $validated['is_featured'] ?? false,
-            'is_trending' => $validated['is_trending'] ?? false,
-            'is_hot' => $validated['is_hot'] ?? false,
-            'is_new' => $validated['is_new'] ?? false,
-        ]);
+        //     // URL get karo
+        //     $validated['main_image'] = $uploadedFile->getSecurePath();
+        //     // $mainImage->move(public_path('uploads/products'), $mainImageName);
+        //     // $validated['main_image'] = 'uploads/products/' . $mainImageName;
+        // }
+        // if ($request->hasFile('gallery_images')) {
+        //     $galleryImageNames = [];
+        //     foreach ($request->file('gallery_images') as $galleryImage) {
+        //         $name = time() . '_' . uniqid() . '.' . $galleryImage->getClientOriginalExtension();
+        //         $galleryImage->move(public_path('uploads/products'), $name);
+        //         $galleryImageNames[] = 'uploads/products/' . $name;
+        //     }
+        // }
 
-        if ($product) {
-            return response()->json(['success' => true, 'message' => 'Product created successfully.']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Failed to create product.']);
+        // $product = Product::create([
+        //     'name' => $validated['name'],
+        //     'slug' => $slug,
+        //     'description' => $validated['description'] ?? '',
+        //     'price' => $price,
+        //     'category_id' => $validated['category_id'],
+        //     'brand_id' => $validated['brand_id'] ?? null,
+        //     'key_features' => $keyFeatures,
+        //     'short_description' => $validated['short_description'] ?? '',
+        //     'old_price' => $validated['old_price'] ?? null,
+        //     'discount_price' => $validated['discount_price'] ?? null,
+        //     'cost_price' => $validated['cost_price'] ?? null,
+        //     'stock_quantity' => $validated['stock_quantity'] ?? 0,
+        //     'sku' => $sku,
+        //     'main_image' => $validated['main_image'] ?? null,
+        //     'gallery_images' => $galleryImageNames ?? null,
+        //     'warenty' => $validated['warenty'] ?? 0,
+        //     'has_variants' => $validated['has_variants'] ?? false,
+        //     'variant_type' => $validated['variant_type'] ?? null,
+        //     'status' => $validated['status'] ?? 'inactive',
+        //     'is_featured' => $validated['is_featured'] ?? false,
+        //     'is_trending' => $validated['is_trending'] ?? false,
+        //     'is_hot' => $validated['is_hot'] ?? false,
+        //     'is_new' => $validated['is_new'] ?? false,
+        // ]);
+
+        // if ($product) {
+        //     return response()->json(['success' => true, 'message' => 'Product created successfully.']);
+        // } else {
+        //     return response()->json(['success' => false, 'message' => 'Failed to create product.']);
+        // }
+
+
+        // cloudinary
+
+    /*
+    |-----------------------------
+    | PRICE LOGIC
+    |-----------------------------
+    */
+    $price = $validated['old_price'];
+
+    if (!empty($validated['discount_price'])) {
+        $price = $validated['old_price'] - $validated['discount_price'];
+    }
+
+    /*
+    |-----------------------------
+    | SLUG
+    |-----------------------------
+    */
+    $slug = Str::slug($validated['name']);
+    $originalSlug = $slug;
+    $count = 1;
+
+    while (Product::where('slug', $slug)->exists()) {
+        $slug = $originalSlug . '-' . $count++;
+    }
+
+    /*
+    |-----------------------------
+    | SKU
+    |-----------------------------
+    */
+    $sku = 'PROD-' . strtoupper(Str::random(6));
+
+    /*
+    |-----------------------------
+    | KEY FEATURES
+    |-----------------------------
+    */
+    $keyFeatures = isset($request->key_features)
+        ? explode(',', $request->key_features)
+        : [];
+
+    /*
+    |-----------------------------
+    | MAIN IMAGE (CLOUDINARY)
+    |-----------------------------
+    */
+    $mainImageUrl = null;
+    $mainImagePublicId = null;
+
+    if ($request->hasFile('main_image')) {
+
+        $uploaded = Cloudinary::upload(
+            $request->file('main_image')->getRealPath(),
+            ['folder' => 'products']
+        );
+
+        $mainImageUrl = $uploaded->getSecurePath();
+        $mainImagePublicId = $uploaded->getPublicId();
+    }
+
+    /*
+    |-----------------------------
+    | GALLERY IMAGES (CLOUDINARY)
+    |-----------------------------
+    */
+    $galleryImages = [];
+
+    if ($request->hasFile('gallery_images')) {
+
+        foreach ($request->file('gallery_images') as $image) {
+
+            $uploaded = Cloudinary::upload(
+                $image->getRealPath(),
+                ['folder' => 'products/gallery']
+            );
+
+            $galleryImages[] = [
+                'url' => $uploaded->getSecurePath(),
+                'public_id' => $uploaded->getPublicId()
+            ];
         }
+    }
+
+    /*
+    |-----------------------------
+    | CREATE PRODUCT
+    |-----------------------------
+    */
+    $product = Product::create([
+        'name' => $validated['name'],
+        'slug' => $slug,
+        'description' => $validated['description'] ?? '',
+        'price' => $price,
+        'category_id' => $validated['category_id'],
+        'brand_id' => $validated['brand_id'] ?? null,
+        'key_features' => $keyFeatures,
+        'short_description' => $validated['short_description'] ?? '',
+        'old_price' => $validated['old_price'],
+        'discount_price' => $validated['discount_price'] ?? null,
+        'cost_price' => $validated['cost_price'],
+        'stock_quantity' => $validated['stock_quantity'] ?? 0,
+        'sku' => $sku,
+
+        // CLOUDINARY DATA
+        'main_image' => $mainImageUrl,
+        'main_image_public_id' => $mainImagePublicId,
+        'gallery_images' => $galleryImages,
+
+        'warenty' => $validated['warenty'] ?? null,
+        'has_variants' => $validated['has_variants'] ?? false,
+        'variant_type' => $validated['variant_type'] ?? null,
+        'status' => $validated['status'] ?? 'Inactive',
+        'is_featured' => $validated['is_featured'] ?? false,
+        'is_trending' => $validated['is_trending'] ?? false,
+        'is_hot' => $validated['is_hot'] ?? false,
+        'is_new' => $validated['is_new'] ?? false,
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Product created successfully',
+        'product' => $product
+    ]);
     }
     // edit product form
     public function editProduct($id)
@@ -172,90 +308,231 @@ class AdminController extends Controller
         $brands = Brand::get();
         return view('admin.partials.addProductForm', compact('product', 'categories', 'brands'));
     }
+
+    // file upload in system 
+    // public function updateProduct(Request $request, $id)
+    // {
+    //     if (!is_writable(public_path('uploads/products'))) {
+    //         $product = Product::findOrFail($id);
+    //         $validated = $request->validate([
+    //             'name' => 'string|required',
+    //             'description' => 'string|nullable',
+    //             'category_id' => 'exists:categories,id|required',
+    //             'brand_id' => 'exists:brands,id|nullable',
+    //             'key_features' => 'nullable',
+    //             'short_description' => 'string|nullable',
+    //             'old_price' => 'numeric|required',
+    //             'discount_price' => 'numeric|nullable',
+    //             'cost_price' => 'numeric|nullable',
+    //             'stock_quantity' => 'integer|nullable',
+    //             'main_image' => 'nullable|mimes:jpeg,png,jpg,gif,webp,avif|max:2048',
+    //             'gallery_images' => 'nullable|array',
+    //             'gallery_images.*' => 'mimes:jpeg,png,jpg,gif,webp,avif|max:2048',
+    //             'warenty' => 'nullable|String',
+    //             'has_variants' => 'boolean',
+    //             'variant_type' => 'string|nullable',
+    //             'status' => 'string|in:Active,Inactive',
+    //             'is_featured' => 'boolean|nullable',
+    //             'is_trending' => 'boolean|nullable',
+    //             'is_hot' => 'boolean|nullable',
+    //             'is_new' => 'boolean|nullable',
+    //         ]);
+    //         // check brand and create
+    //         // set price
+    //         $price = $validated['old_price'];
+    //         if ($validated['discount_price']) {
+    //             $price = $validated['old_price'] - $validated['discount_price'];
+    //         }
+    //         // slug logic
+    //         $slug = $product->slug;
+    //         if ($validated['name'] != $product->name) {
+    //             $slug = Str::slug($validated['name']);
+    //             $originalSlug = $slug;
+    //             $count = 1;
+    //             while (Product::where('slug', $slug)->exists()) {
+    //                 $slug = $originalSlug . '-' . $count++;
+    //             }
+    //         }
+    //         $keyFeatures = explode(",", $request->key_features);
+    //         if ($request->hasFile('main_image')) {
+    //             if ($product->main_image) {
+    //                 $oldImagePath = public_path($product->main_image);
+    //                 if (file_exists($oldImagePath)) {
+    //                     unlink($oldImagePath);
+    //                 }
+    //             }
+    //             $mainImage = $request->file('main_image');
+    //             $mainImageName = time() . '_' . uniqid() . '.' . $mainImage->getClientOriginalExtension();
+    //             $mainImage->move(public_path('uploads/products'), $mainImageName);
+    //             $validated['main_image'] = 'uploads/products/' . $mainImageName;
+    //         }
+    //         $galleryImageNames = [];
+    //         if ($request->hasFile('gallery_images')) {
+    //             if ($product->gallery_images) {
+    //                 foreach ($product->gallery_images as $oldGalleryImage) {
+    //                     $oldImagePath = public_path($oldGalleryImage);
+    //                     if (file_exists($oldImagePath)) {
+    //                         unlink($oldImagePath);
+    //                     }
+    //                 }
+    //             }
+    //             foreach ($request->file('gallery_images') as $galleryImage) {
+    //                 $name = time() . '_' . uniqid() . '.' . $galleryImage->getClientOriginalExtension();
+    //                 $galleryImage->move(public_path('uploads/products'), $name);
+    //                 $galleryImageNames[] = 'uploads/products/' . $name;
+    //             }
+    //             $validated['gallery_images'] = $galleryImageNames;
+    //         }
+    //         $validated['key_features'] = $keyFeatures;
+    //         // save price
+    //         $product->price = $price;
+    //         $product->slug = $slug;
+    //         if ($product->update($validated)) {
+    //             return response()->json(['success' => true, 'message' => 'Product updated successfully.']);
+    //         } else {
+    //             return response()->json(['success' => false, 'message' => 'Failed to updated product.']);
+    //         }
+    //     }
+    // }
+
+    // file upload on cloudinary 
     public function updateProduct(Request $request, $id)
-    {
-        if (!is_writable(public_path('uploads/products'))) {
-        $product = Product::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'string|required',
-            'description' => 'string|nullable',
-            'category_id' => 'exists:categories,id|required',
-            'brand_id' => 'exists:brands,id|nullable',
-            'key_features' => 'nullable',
-            'short_description' => 'string|nullable',
-            'old_price' => 'numeric|required',
-            'discount_price' => 'numeric|nullable',
-            'cost_price' => 'numeric|nullable',
-            'stock_quantity' => 'integer|nullable',
-            'main_image' => 'nullable|mimes:jpeg,png,jpg,gif,webp,avif|max:2048',
-            'gallery_images' => 'nullable|array',
-            'gallery_images.*' => 'mimes:jpeg,png,jpg,gif,webp,avif|max:2048',
-            'warenty' => 'nullable|String',
-            'has_variants' => 'boolean',
-            'variant_type' => 'string|nullable',
-            'status' => 'string|in:Active,Inactive',
-            'is_featured' => 'boolean|nullable',
-            'is_trending' => 'boolean|nullable',
-            'is_hot' => 'boolean|nullable',
-            'is_new' => 'boolean|nullable',
-        ]);
-        // check brand and create
-        // set price
-        $price = $validated['old_price'];
-        if ($validated['discount_price']) {
-            $price = $validated['old_price'] - $validated['discount_price'];
-        }
-        // slug logic
-        $slug = $product->slug;
-        if ($validated['name'] != $product->name) {
-            $slug = Str::slug($validated['name']);
-            $originalSlug = $slug;
-            $count = 1;
-            while (Product::where('slug', $slug)->exists()) {
-                $slug = $originalSlug . '-' . $count++;
-            }
-        }
-        $keyFeatures = explode(",", $request->key_features);
-        if ($request->hasFile('main_image')) {
-            if ($product->main_image) {
-                $oldImagePath = public_path($product->main_image);
-                if (file_exists($oldImagePath)) {
-                    unlink($oldImagePath);
-                }
-            }
-            $mainImage = $request->file('main_image');
-            $mainImageName = time() . '_' . uniqid() . '.' . $mainImage->getClientOriginalExtension();
-            $mainImage->move(public_path('uploads/products'), $mainImageName);
-            $validated['main_image'] = 'uploads/products/' . $mainImageName;
-        }
-        $galleryImageNames = [];
-        if ($request->hasFile('gallery_images')) {
-            if ($product->gallery_images) {
-                foreach ($product->gallery_images as $oldGalleryImage) {
-                    $oldImagePath = public_path($oldGalleryImage);
-                    if (file_exists($oldImagePath)) {
-                        unlink($oldImagePath);
-                    }
-                }
-            }
-            foreach ($request->file('gallery_images') as $galleryImage) {
-                $name = time() . '_' . uniqid() . '.' . $galleryImage->getClientOriginalExtension();
-                $galleryImage->move(public_path('uploads/products'), $name);
-                $galleryImageNames[] = 'uploads/products/' . $name;
-            }
-            $validated['gallery_images'] = $galleryImageNames;
-        }
-        $validated['key_features'] = $keyFeatures;
-        // save price
-        $product->price = $price;
-        $product->slug = $slug;
-        if ($product->update($validated)) {
-            return response()->json(['success' => true, 'message' => 'Product updated successfully.']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Failed to updated product.']);
+{
+    $product = Product::findOrFail($id);
+
+    $validated = $request->validate([
+        'name' => 'string|required',
+        'description' => 'string|nullable',
+        'category_id' => 'exists:categories,id|required',
+        'brand_id' => 'exists:brands,id|nullable',
+        'key_features' => 'nullable',
+        'short_description' => 'string|nullable',
+        'old_price' => 'numeric|required',
+        'discount_price' => 'numeric|nullable',
+        'cost_price' => 'numeric|nullable',
+        'stock_quantity' => 'integer|nullable',
+        'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,avif|max:2048',
+        'gallery_images' => 'nullable|array',
+        'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif|max:2048',
+        'warenty' => 'nullable|string',
+        'has_variants' => 'boolean',
+        'variant_type' => 'string|nullable',
+        'status' => 'string|in:Active,Inactive',
+        'is_featured' => 'boolean|nullable',
+        'is_trending' => 'boolean|nullable',
+        'is_hot' => 'boolean|nullable',
+        'is_new' => 'boolean|nullable',
+    ]);
+
+    /*
+    |-----------------------------
+    | PRICE
+    |-----------------------------
+    */
+    $price = $validated['old_price'];
+
+    if (isset($validated['discount_price'])) {
+        $price = $validated['old_price'] - $validated['discount_price'];
+    }
+
+    /*
+    |-----------------------------
+    | SLUG
+    |-----------------------------
+    */
+    $slug = $product->slug;
+
+    if ($validated['name'] !== $product->name) {
+        $slug = Str::slug($validated['name']);
+        $originalSlug = $slug;
+        $count = 1;
+
+        while (Product::where('slug', $slug)->where('id', '!=', $id)->exists()) {
+            $slug = $originalSlug . '-' . $count++;
         }
     }
+
+    /*
+    |-----------------------------
+    | KEY FEATURES
+    |-----------------------------
+    */
+    $keyFeatures = isset($request->key_features)
+        ? array_map('trim', explode(',', $request->key_features))
+        : [];
+
+    /*
+    |-----------------------------
+    | MAIN IMAGE (CLOUDINARY)
+    |-----------------------------
+    */
+    if ($request->hasFile('main_image')) {
+
+        // delete old image
+        if ($product->main_image_public_id) {
+            Cloudinary::destroy($product->main_image_public_id);
+        }
+
+        $uploaded = Cloudinary::upload(
+            $request->file('main_image')->getRealPath(),
+            ['folder' => 'products']
+        );
+
+        $validated['main_image'] = $uploaded->getSecurePath();
+        $validated['main_image_public_id'] = $uploaded->getPublicId();
     }
+
+    /*
+    |-----------------------------
+    | GALLERY IMAGES (CLOUDINARY)
+    |-----------------------------
+    */
+    if ($request->hasFile('gallery_images')) {
+
+        // delete old gallery images
+        if ($product->gallery_images) {
+            foreach ($product->gallery_images as $img) {
+                if (!empty($img['public_id'])) {
+                    Cloudinary::destroy($img['public_id']);
+                }
+            }
+        }
+
+        $galleryImages = [];
+
+        foreach ($request->file('gallery_images') as $image) {
+
+            $uploaded = Cloudinary::upload(
+                $image->getRealPath(),
+                ['folder' => 'products/gallery']
+            );
+
+            $galleryImages[] = [
+                'url' => $uploaded->getSecurePath(),
+                'public_id' => $uploaded->getPublicId()
+            ];
+        }
+
+        $validated['gallery_images'] = $galleryImages;
+    }
+
+    /*
+    |-----------------------------
+    | FINAL UPDATE
+    |-----------------------------
+    */
+    $validated['key_features'] = $keyFeatures;
+    $validated['price'] = $price;
+    $validated['slug'] = $slug;
+
+    $product->update($validated);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Product updated successfully',
+        'product' => $product
+    ]);
+}
     // categories data for datatable
     public function categoriesData(Request $request)
     {
